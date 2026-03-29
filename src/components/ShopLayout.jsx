@@ -7,6 +7,7 @@ import AuthModal from './AuthModal'
 export default function ShopLayout({ children }) {
   const { cartCount, user, setUser, setShowAuthModal } = useCart()
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -53,7 +54,8 @@ export default function ShopLayout({ children }) {
       <style>{`
         @media (max-width: 768px) {
           nav { padding: 0 16px !important; }
-          .nav-links { gap: 16px !important; }
+          .nav-links { display: none !important; }
+          .hamburger { display: flex !important; }
           main { padding: 16px !important; }
           footer { padding: 24px !important; }
         }
@@ -75,6 +77,15 @@ export default function ShopLayout({ children }) {
             <span style={{ fontSize: 9, letterSpacing: '0.3em', color: '#c9a96e', textTransform: 'uppercase' }}>Premium Store</span>
           </div>
         </Link>
+
+        <button onClick={() => setMenuOpen(!menuOpen)} className="hamburger" style={{
+          display: 'none', background: 'none', border: 'none', cursor: 'pointer',
+          width: 44, height: 44, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 4
+        }}>
+          <div style={{ width: 20, height: 2, background: '#f0ece4', transition: '0.3s' }}></div>
+          <div style={{ width: 20, height: 2, background: '#f0ece4', transition: '0.3s' }}></div>
+          <div style={{ width: 20, height: 2, background: '#f0ece4', transition: '0.3s' }}></div>
+        </button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 36, flexWrap: 'wrap' }} className="nav-links">
           <Link to="/" className="nav-link">Collection</Link>
@@ -126,6 +137,40 @@ export default function ShopLayout({ children }) {
           </Link>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      <div className="mobile-menu" style={{
+        position: 'fixed', top: 72, left: 0, right: 0,
+        background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        display: menuOpen ? 'block' : 'none', zIndex: 999
+      }}>
+        <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>Collection</Link>
+          <Link to="/blog" className="nav-link" onClick={() => setMenuOpen(false)}>Journal</Link>
+          <Link to="/about" className="nav-link" onClick={() => setMenuOpen(false)}>About</Link>
+          <Link to="/contact" className="nav-link" onClick={() => setMenuOpen(false)}>Contact</Link>
+          {user ? (
+            <>
+              <span style={{ fontSize: 12, color: '#777', letterSpacing: '0.08em' }}>
+                {user.email?.split('@')[0]}
+              </span>
+              <button onClick={() => { logout(); setMenuOpen(false) }} className="nav-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: '"DM Sans", sans-serif' }}>
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => { setShowAuthModal(true); setMenuOpen(false) }}
+              className="nav-link"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: '"DM Sans", sans-serif' }}
+            >
+              Sign In
+            </button>
+          )}
+          {user && <Link to="/my-orders" className="nav-link" onClick={() => setMenuOpen(false)}>My Orders</Link>}
+        </div>
+      </div>
 
       <main style={{ paddingTop: 72 }}>{children}</main>
 
