@@ -34,7 +34,7 @@ export default function About() {
           textAlign: 'center', padding: '80px 48px',
           background: 'radial-gradient(ellipse at 50% 60%, #1a1408 0%, #0a0a0a 70%)',
           position: 'relative', overflow: 'hidden'
-        }}>
+        }} className="about-hero">
           <div style={{ position: 'absolute', top: '15%', left: '10%', width: '30%', height: 1, background: 'linear-gradient(90deg, transparent, rgba(201,169,110,0.15), transparent)', transform: 'rotate(-10deg)' }} />
           <div style={{ position: 'absolute', bottom: '20%', right: '8%', width: '25%', height: 1, background: 'linear-gradient(90deg, transparent, rgba(201,169,110,0.12), transparent)', transform: 'rotate(-10deg)' }} />
 
@@ -52,7 +52,7 @@ export default function About() {
 
         {/* Stats */}
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '40px 48px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, maxWidth: 800, margin: '0 auto', textAlign: 'center' }} className="about-stats-grid">
             {stats.map(s => (
               <div key={s.label}>
                 <p style={{ fontFamily: '"Playfair Display", serif', fontSize: 36, color: '#c9a96e', marginBottom: 8 }}>{s.value}</p>
@@ -63,8 +63,8 @@ export default function About() {
         </div>
 
         {/* Story */}
-        <div style={{ padding: '80px 48px', maxWidth: 860, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+        <div style={{ padding: '80px 48px', maxWidth: 860, margin: '0 auto' }} className="about-story">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }} className="about-story-grid">
             <div>
               <p style={{ fontSize: 10, letterSpacing: '0.4em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 16 }}>How We Started</p>
               <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 36, color: '#f0ece4', lineHeight: 1.2, marginBottom: 24 }}>A Small Idea That Grew</h2>
@@ -97,12 +97,12 @@ export default function About() {
         </div>
 
         {/* Values */}
-        <div style={{ background: 'rgba(255,255,255,0.02)', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '80px 48px' }}>
+        <div style={{ background: 'rgba(255,255,255,0.02)', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '80px 48px' }} className="about-values">
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
             <p style={{ fontSize: 10, letterSpacing: '0.4em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 16 }}>What We Stand For</p>
             <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 40, color: '#f0ece4' }}>Our Values</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 24, maxWidth: 1000, margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 24, maxWidth: 1000, margin: '0 auto' }} className="about-values-grid">
             {values.map((v, i) => (
               <div key={v.title} style={{
                 border: '1px solid rgba(255,255,255,0.06)', padding: 32,
@@ -117,7 +117,7 @@ export default function About() {
         </div>
 
         {/* Team */}
-        <div style={{ padding: '80px 48px' }}>
+        <div style={{ padding: '80px 48px' }} className="about-team">
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
             <p style={{ fontSize: 10, letterSpacing: '0.4em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 16 }}>The People Behind It</p>
             <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 40, color: '#f0ece4' }}>Our Team</h2>
@@ -142,7 +142,7 @@ export default function About() {
         </div>
 
         {/* CTA */}
-        <div style={{ textAlign: 'center', padding: '60px 48px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ textAlign: 'center', padding: '60px 48px', borderTop: '1px solid rgba(255,255,255,0.06)' }} className="about-cta">
           <p style={{ fontFamily: '"Playfair Display", serif', fontSize: 32, color: '#f0ece4', marginBottom: 16 }}>Have a question?</p>
           <p style={{ color: '#555', marginBottom: 32, fontSize: 15 }}>We'd love to hear from you.</p>
           <button className="ghost-btn" onClick={() => navigate('/contact')} style={{
@@ -151,6 +151,19 @@ export default function About() {
           }}>Contact Us</button>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .about-hero { padding: 60px 16px !important; }
+          .about-stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+          .about-story { padding: 40px 16px !important; }
+          .about-story-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .about-values { padding: 40px 16px !important; }
+          .about-values-grid { grid-template-columns: 1fr !important; }
+          .about-team { padding: 40px 16px !important; }
+          .about-cta { padding: 40px 16px !important; }
+        }
+      `}</style>
     </ShopLayout>
   )
 }

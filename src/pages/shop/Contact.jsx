@@ -65,7 +65,7 @@ export default function Contact() {
       <div style={{ animation: 'fadeUp 0.6s ease both' }}>
 
         {/* Hero */}
-        <div style={{ padding: '80px 48px 60px', textAlign: 'center', background: 'radial-gradient(ellipse at 50% 60%, #1a1408 0%, #0a0a0a 70%)' }}>
+        <div style={{ padding: '80px 48px 60px', textAlign: 'center', background: 'radial-gradient(ellipse at 50% 60%, #1a1408 0%, #0a0a0a 70%)' }} className="contact-hero">
           <p style={{ fontSize: 10, letterSpacing: '0.5em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 16 }}>Get in Touch</p>
           <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 'clamp(36px, 6vw, 60px)', color: '#f0ece4', lineHeight: 1.1, marginBottom: 20 }}>
             We'd Love to<br />
@@ -76,7 +76,7 @@ export default function Contact() {
           </p>
         </div>
 
-        <div style={{ padding: '60px 48px', display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 48, maxWidth: 1100, margin: '0 auto', alignItems: 'start' }}>
+        <div style={{ padding: '60px 48px', display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 48, maxWidth: 1100, margin: '0 auto', alignItems: 'start' }} className="contact-main">
 
           {/* Left — contact info */}
           <div>
@@ -153,7 +153,7 @@ export default function Contact() {
                 )}
 
                 <form onSubmit={handleSubmit}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="contact-form-grid">
                     <div>
                       <label style={lStyle}>Your Name</label>
                       <input style={iStyle} value={form.name} onChange={e => set('name', e.target.value)} required placeholder="Full name"
@@ -192,6 +192,14 @@ export default function Contact() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .contact-hero { padding: 60px 16px 40px !important; }
+          .contact-main { padding: 40px 16px !important; grid-template-columns: 1fr !important; gap: 32px !important; }
+          .contact-form-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </ShopLayout>
   )
 }
