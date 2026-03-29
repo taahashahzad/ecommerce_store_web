@@ -7,7 +7,6 @@ import AuthModal from './AuthModal'
 export default function ShopLayout({ children }) {
   const { cartCount, user, setUser, setShowAuthModal } = useCart()
   const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
 
