@@ -46,7 +46,7 @@ export default function AddProduct() {
 
     const variantRows = variants
       .filter(v => v.size || v.color)
-      .map(v => ({ ...v, product_id: product.id, stock_qty: Number(v.stock_qty), price_adjustment: Number(v.price_adjustment) - Number(form.base_price) }))
+      .map(v => ({ ...v, product_id: product.id, stock_qty: Number(v.stock_qty), price_adjustment: Number(v.price_adjustment) }))
 
     if (variantRows.length > 0) {
       await supabase.from('product_variants').insert(variantRows)

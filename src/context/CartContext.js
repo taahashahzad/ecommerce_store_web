@@ -4,27 +4,23 @@ import { supabase } from '../supabase'
 const CartContext = createContext()
 
 export function CartProvider({ children }) {
-  const [cart, setCart]   = useState([])
-  const [user, setUser]   = useState(null)
+  const [cart, setCart]             = useState([])
+  const [user, setUser]             = useState(null)
+  const [showAuthModal, setShowAuthModal] = useState(false)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setUser(data.session?.user || null)
     })
-
     const { data: listener } = supabase.auth.onAuthStateChange((_e, session) => {
       setUser(session?.user || null)
     })
-
     return () => listener.subscription.unsubscribe()
   }, [])
 
   useEffect(() => {
     if (user) fetchCart()
-    else {
-      const local = JSON.parse(localStorage.getItem('cart') || '[]')
-      setCart(local)
-    }
+    else setCart([])
   }, [user])
 
   const fetchCart = async () => {
@@ -36,51 +32,65 @@ export function CartProvider({ children }) {
   }
 
   const addToCart = async (variant, product, qty = 1) => {
-    if (user) {
-      const existing = cart.find(c => c.variant_id === variant.id)
-      if (existing) {
-        await supabase.from('cart_items')
-          .update({ quantity: existing.quantity + qty })
-          .eq('id', existing.id)
-      } else {
-        await supabase.from('cart_items')
-          .insert({ user_id: user.id, variant_id: variant.id, quantity: qty })
-      }
-      fetchCart()
-    } else {
-      const local = JSON.parse(localStorage.getItem('cart') || '[]')
-      const idx   = local.findIndex(c => c.variant_id === variant.id)
-      if (idx >= 0) local[idx].quantity += qty
-      else local.push({ variant_id: variant.id, quantity: qty, product_variants: { ...variant, products: product } })
-      localStorage.setItem('cart', JSON.stringify(local))
-      setCart(local)
+    if (!user) {
+      setShowAuthModal(true)
+      return
     }
+    let variantId = variant.id
+    if (!variantId) {
+      // No variant selected, create or find default variant
+      const { data: existing } = await supabase
+        .from('product_variants')
+        .select('id')
+        .eq('product_id', product.id)
+        .eq('size', 'Default')
+        .maybeSingle()
+      if (existing) {
+        variantId = existing.id
+      } else {
+        const { data: newVariant } = await supabase
+          .from('product_variants')
+          .insert({
+            product_id: product.id,
+            size: 'Default',
+            color: '',
+            stock_qty: 999999,
+            price_adjustment: product.base_price
+          })
+          .select('id')
+          .single()
+        variantId = newVariant.id
+      }
+    }
+    const existing = cart.find(c => c.variant_id === variantId)
+    if (existing) {
+      await supabase.from('cart_items')
+        .update({ quantity: existing.quantity + qty })
+        .eq('id', existing.id)
+    } else {
+      await supabase.from('cart_items')
+        .insert({ user_id: user.id, variant_id: variantId, quantity: qty })
+    }
+    fetchCart()
   }
 
   const removeFromCart = async (item) => {
-    if (user) {
-      await supabase.from('cart_items').delete().eq('id', item.id)
-      fetchCart()
-    } else {
-      const local = cart.filter(c => c.variant_id !== item.variant_id)
-      localStorage.setItem('cart', JSON.stringify(local))
-      setCart(local)
-    }
+    await supabase.from('cart_items').delete().eq('id', item.id)
+    fetchCart()
   }
 
   const clearCart = async () => {
-    if (user) {
-      await supabase.from('cart_items').delete().eq('user_id', user.id)
-    } else {
-      localStorage.removeItem('cart')
-    }
+    await supabase.from('cart_items').delete().eq('user_id', user.id)
     setCart([])
   }
 
   const cartCount = cart.reduce((sum, i) => sum + i.quantity, 0)
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, cartCount, user, setUser }}>
+    <CartContext.Provider value={{
+      cart, addToCart, removeFromCart, clearCart,
+      cartCount, user, setUser, showAuthModal, setShowAuthModal
+    }}>
       {children}
     </CartContext.Provider>
   )

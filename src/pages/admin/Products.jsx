@@ -45,14 +45,14 @@ export default function Products() {
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: '#f8f8f8', textAlign: 'left' }}>
-                {['Image', 'Name', 'Category', 'Price', 'Status', 'Actions'].map(h => (
+                {['Image', 'Name', 'Category', 'Price', 'Stock', 'Status', 'Actions'].map(h => (
                   <th key={h} style={{ padding: '12px 16px', fontSize: 13, color: '#666', fontWeight: 600 }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {products.length === 0 ? (
-                <tr><td colSpan={6} style={{ padding: 32, textAlign: 'center', color: '#aaa' }}>No products yet</td></tr>
+                <tr><td colSpan={7} style={{ padding: 32, textAlign: 'center', color: '#aaa' }}>No products yet</td></tr>
               ) : products.map(p => (
                 <tr key={p.id} style={{ borderTop: '1px solid #f0f0f0' }}>
                   <td style={{ padding: '12px 16px' }}>
@@ -63,6 +63,7 @@ export default function Products() {
                   <td style={{ padding: '12px 16px', fontWeight: 500 }}>{p.name}</td>
                   <td style={{ padding: '12px 16px', color: '#666' }}>{p.categories?.name || '—'}</td>
                   <td style={{ padding: '12px 16px' }}>Rs {Number(p.base_price).toLocaleString()}</td>
+                  <td style={{ padding: '12px 16px', color: '#666' }}>{p.stock_qty ?? '—'}</td>
                   <td style={{ padding: '12px 16px' }}>
                     <span style={{
                       padding: '4px 10px', borderRadius: 20, fontSize: 12,
@@ -71,14 +72,20 @@ export default function Products() {
                     }}>{p.is_active ? 'Active' : 'Inactive'}</span>
                   </td>
                   <td style={{ padding: '12px 16px' }}>
-                    <button onClick={() => toggleActive(p.id, p.is_active)} style={{
-                      marginRight: 8, padding: '6px 12px', borderRadius: 6, border: '1px solid #ddd',
-                      cursor: 'pointer', fontSize: 12, background: '#fff'
-                    }}>{p.is_active ? 'Deactivate' : 'Activate'}</button>
-                    <button onClick={() => deleteProduct(p.id)} style={{
-                      padding: '6px 12px', borderRadius: 6, border: 'none',
-                      cursor: 'pointer', fontSize: 12, background: '#fee2e2', color: '#dc2626'
-                    }}>Delete</button>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <button onClick={() => navigate(`/admin/products/edit/${p.id}`)} style={{
+                        padding: '6px 12px', borderRadius: 6, border: '1px solid #ddd',
+                        cursor: 'pointer', fontSize: 12, background: '#fff'
+                      }}>Edit</button>
+                      <button onClick={() => toggleActive(p.id, p.is_active)} style={{
+                        padding: '6px 12px', borderRadius: 6, border: '1px solid #ddd',
+                        cursor: 'pointer', fontSize: 12, background: '#fff'
+                      }}>{p.is_active ? 'Deactivate' : 'Activate'}</button>
+                      <button onClick={() => deleteProduct(p.id)} style={{
+                        padding: '6px 12px', borderRadius: 6, border: 'none',
+                        cursor: 'pointer', fontSize: 12, background: '#fee2e2', color: '#dc2626'
+                      }}>Delete</button>
+                    </div>
                   </td>
                 </tr>
               ))}
