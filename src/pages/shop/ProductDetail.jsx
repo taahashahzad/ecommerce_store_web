@@ -108,8 +108,8 @@ export default function ProductDetail() {
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(24px)',
         transition: 'all 0.7s cubic-bezier(0.25,0.46,0.45,0.94)'
-      }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
+      }} className="product-detail-container">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }} className="product-grid">
           {/* Image */}
           <div style={{ position: 'sticky', top: 100 }}>
             <div style={{ aspectRatio: '4/5', background: '#111', border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', position: 'relative' }}>
@@ -138,9 +138,9 @@ export default function ProductDetail() {
           {/* Info */}
           <div>
             <p style={{ fontSize: 10, letterSpacing: '0.4em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 16 }}>{product.categories?.name}</p>
-            <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 40, fontWeight: 600, color: '#f0ece4', lineHeight: 1.15, marginBottom: 24 }}>{product.name}</h1>
+            <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 40, fontWeight: 600, color: '#f0ece4', lineHeight: 1.15, marginBottom: 24 }} className="product-h1">{product.name}</h1>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 32 }}>
-              <span style={{ fontSize: 32, fontWeight: 300, color: '#c9a96e' }}>Rs {price.toLocaleString()}</span>
+              <span style={{ fontSize: 32, fontWeight: 300, color: '#c9a96e' }} className="product-price">Rs {price.toLocaleString()}</span>
             </div>
             <div style={{ width: 40, height: 1, background: 'rgba(201,169,110,0.3)', marginBottom: 32 }} />
             <p style={{ color: '#888', lineHeight: 1.9, fontSize: 15, marginBottom: 40 }}>{product.description}</p>
@@ -311,7 +311,7 @@ export default function ProductDetail() {
               </p>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 20 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 20 }} className="reviews-grid">
               {reviews.map((r, i) => (
                 <div key={r.id} style={{
                   border: '1px solid rgba(255,255,255,0.06)',
@@ -351,6 +351,16 @@ export default function ProductDetail() {
           )}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .product-detail-container { padding: 30px 16px !important; }
+          .product-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .product-h1 { font-size: 28px !important; }
+          .product-price { font-size: 24px !important; }
+          .reviews-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </ShopLayout>
   )
 }

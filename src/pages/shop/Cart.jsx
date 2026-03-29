@@ -18,9 +18,9 @@ export default function Cart() {
 
   return (
     <ShopLayout>
-      <div style={{ padding: '60px 48px', animation: 'fadeUp 0.6s ease both' }}>
+      <div style={{ padding: '60px 48px', animation: 'fadeUp 0.6s ease both' }} className="cart-container">
         <p style={{ fontSize: 10, letterSpacing: '0.4em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 12 }}>Your Selection</p>
-        <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 44, color: '#f0ece4', marginBottom: 48 }}>Shopping Cart</h1>
+        <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 44, color: '#f0ece4', marginBottom: 48 }} className="cart-h1">Shopping Cart</h1>
 
         {cart.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '80px 0' }}>
@@ -32,7 +32,7 @@ export default function Cart() {
             }}>Explore Collection</button>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 32, alignItems: 'start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 32, alignItems: 'start' }} className="cart-grid">
             <div>
               {cart.map((item, i) => {
                 const v     = item.product_variants
@@ -43,8 +43,8 @@ export default function Cart() {
                     display: 'flex', gap: 24, padding: '28px 0',
                     borderBottom: '1px solid rgba(255,255,255,0.06)',
                     animation: `fadeUp 0.5s ease both`, animationDelay: `${i * 0.08}s`
-                  }}>
-                    <div style={{ width: 100, height: 120, background: '#111', border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', flexShrink: 0 }}>
+                  }} className="cart-item">
+                    <div style={{ width: 100, height: 120, background: '#111', border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', flexShrink: 0 }} className="cart-image">
                       {p?.image_url && <img src={p.image_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
                     </div>
                     <div style={{ flex: 1 }}>
@@ -95,6 +95,16 @@ export default function Cart() {
           </div>
         )}
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .cart-container { padding: 30px 16px !important; }
+          .cart-h1 { font-size: 32px !important; }
+          .cart-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .cart-item { flex-direction: column !important; gap: 16px !important; text-align: center !important; }
+          .cart-image { width: 100% !important; height: 200px !important; }
+        }
+      `}</style>
     </ShopLayout>
   )
 }

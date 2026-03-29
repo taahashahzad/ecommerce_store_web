@@ -50,6 +50,15 @@ export default function ShopLayout({ children }) {
         input::placeholder, textarea::placeholder { color: #555; }
       `}</style>
 
+      <style>{`
+        @media (max-width: 768px) {
+          nav { padding: 0 16px !important; }
+          .nav-links { gap: 16px !important; }
+          main { padding: 16px !important; }
+          footer { padding: 24px !important; }
+        }
+      `}</style>
+
       {/* Navbar */}
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
@@ -67,7 +76,7 @@ export default function ShopLayout({ children }) {
           </div>
         </Link>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 36 }} className="nav-links">
           <Link to="/" className="nav-link">Collection</Link>
           <Link to="/blog" className="nav-link">Journal</Link>
           <Link to="/about" className="nav-link">About</Link>

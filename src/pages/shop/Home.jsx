@@ -203,8 +203,8 @@ export default function Home() {
       </div>
 
       {/* Features strip */}
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '40px 48px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '40px 48px' }} className="features-strip">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, maxWidth: 900, margin: '0 auto', textAlign: 'center' }} className="features-grid">
           {[
             { icon: '◈', title: 'Premium Quality', sub: 'Every product curated' },
             { icon: '◎', title: 'Fast Delivery', sub: 'Across Pakistan' },
@@ -218,6 +218,15 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          #collection { padding: 40px 16px !important; }
+          #collection h2 { font-size: 28px !important; }
+          .features-strip { padding: 20px 16px !important; }
+          .features-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+        }
+      `}</style>
     </ShopLayout>
   )
 }

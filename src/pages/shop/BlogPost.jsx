@@ -81,7 +81,7 @@ export default function BlogPost() {
         )}
 
         {/* Post content */}
-        <div style={{ maxWidth: 740, margin: '0 auto', padding: post.cover_image_url ? '0 48px 80px' : '80px 48px' }}>
+        <div style={{ maxWidth: 740, margin: '0 auto', padding: post.cover_image_url ? '0 48px 80px' : '80px 48px' }} className="post-content">
 
           {/* Meta */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24, marginTop: post.cover_image_url ? -60 : 0, position: 'relative', zIndex: 1 }}>
@@ -121,10 +121,10 @@ export default function BlogPost() {
 
         {/* Related posts */}
         {related.length > 0 && (
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '60px 48px' }}>
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '60px 48px' }} className="related-section">
             <p style={{ fontSize: 10, letterSpacing: '0.4em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 12, textAlign: 'center' }}>Continue Reading</p>
-            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 32, color: '#f0ece4', textAlign: 'center', marginBottom: 40 }}>Related Articles</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 24, maxWidth: 960, margin: '0 auto' }}>
+            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 32, color: '#f0ece4', textAlign: 'center', marginBottom: 40 }} className="related-h2">Related Articles</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 24, maxWidth: 960, margin: '0 auto' }} className="related-grid">
               {related.map(r => (
                 <div key={r.id} onClick={() => navigate(`/blog/${r.slug}`)} style={{
                   border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)',
@@ -146,6 +146,15 @@ export default function BlogPost() {
           </div>
         )}
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .post-content { padding: 0 16px 40px !important; }
+          .related-section { padding: 40px 16px !important; }
+          .related-h2 { font-size: 24px !important; }
+          .related-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </ShopLayout>
   )
 }

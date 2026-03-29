@@ -27,12 +27,12 @@ export default function Blog() {
 
   return (
     <ShopLayout>
-      <div style={{ padding: '60px 48px', animation: 'fadeUp 0.6s ease both' }}>
+      <div style={{ padding: '60px 48px', animation: 'fadeUp 0.6s ease both' }} className="blog-container">
 
         {/* Hero */}
         <div style={{ textAlign: 'center', marginBottom: 64 }}>
           <p style={{ fontSize: 10, letterSpacing: '0.4em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 16 }}>Our Journal</p>
-          <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 52, color: '#f0ece4', marginBottom: 16, lineHeight: 1.1 }}>
+          <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 52, color: '#f0ece4', marginBottom: 16, lineHeight: 1.1 }} className="blog-h1">
             Stories & Ideas
           </h1>
           <p style={{ color: '#555', fontSize: 16, maxWidth: 480, margin: '0 auto' }}>
@@ -74,7 +74,7 @@ export default function Blog() {
                 border: '1px solid rgba(255,255,255,0.06)', marginBottom: 32,
                 cursor: 'pointer', overflow: 'hidden',
                 transition: 'transform 0.3s'
-              }}
+              }} className="featured-post"
                 onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
                 onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
               >
@@ -89,13 +89,13 @@ export default function Blog() {
                       </div>
                   }
                 </div>
-                <div style={{ padding: 40, background: 'rgba(255,255,255,0.02)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div style={{ padding: 40, background: 'rgba(255,255,255,0.02)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} className="featured-text">
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
                     <span style={{ fontSize: 10, letterSpacing: '0.3em', color: '#c9a96e', textTransform: 'uppercase' }}>{filtered[0].category}</span>
                     <span style={{ color: '#333', fontSize: 10 }}>·</span>
                     <span style={{ fontSize: 11, color: '#555' }}>{new Date(filtered[0].created_at).toLocaleDateString('en-PK', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                   </div>
-                  <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 30, color: '#f0ece4', lineHeight: 1.25, marginBottom: 16 }}>{filtered[0].title}</h2>
+                  <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 30, color: '#f0ece4', lineHeight: 1.25, marginBottom: 16 }} className="featured-h2">{filtered[0].title}</h2>
                   <p style={{ color: '#777', lineHeight: 1.8, fontSize: 14, marginBottom: 28 }}>{filtered[0].excerpt}</p>
                   <span style={{ fontSize: 12, color: '#c9a96e', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Read Article →</span>
                 </div>
@@ -104,7 +104,7 @@ export default function Blog() {
 
             {/* Rest of posts grid */}
             {filtered.length > 1 && (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }} className="posts-grid">
                 {filtered.slice(1).map((post, i) => (
                   <div key={post.id} onClick={() => navigate(`/blog/${post.slug}`)} style={{
                     border: '1px solid rgba(255,255,255,0.06)',
@@ -142,6 +142,17 @@ export default function Blog() {
           </div>
         )}
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .blog-container { padding: 30px 16px !important; }
+          .blog-h1 { font-size: 36px !important; }
+          .featured-post { grid-template-columns: 1fr !important; }
+          .featured-text { padding: 20px !important; }
+          .featured-h2 { font-size: 24px !important; }
+          .posts-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </ShopLayout>
   )
 }

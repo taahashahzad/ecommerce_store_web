@@ -177,19 +177,19 @@ export default function Checkout() {
   // Step 1 — Checkout form
   return (
     <ShopLayout>
-      <div style={{ padding: '60px 48px', animation: 'fadeUp 0.6s ease both' }}>
+      <div style={{ padding: '60px 48px', animation: 'fadeUp 0.6s ease both' }} className="checkout-container">
         <p style={{ fontSize: 10, letterSpacing: '0.4em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 12 }}>Final Step</p>
-        <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 44, color: '#f0ece4', marginBottom: 8 }}>Checkout</h1>
+        <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 44, color: '#f0ece4', marginBottom: 8 }} className="checkout-h1">Checkout</h1>
         <p style={{ color: '#555', fontSize: 14, marginBottom: 48 }}>Fill in your details and we'll deliver to your door.</p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 32, alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 32, alignItems: 'start' }} className="checkout-grid">
           <form onSubmit={placeOrder}>
 
             {/* Delivery details */}
             <div style={{ border: '1px solid rgba(255,255,255,0.06)', padding: 40, marginBottom: 24, background: 'rgba(255,255,255,0.02)' }}>
               <p style={{ fontSize: 11, letterSpacing: '0.3em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 28 }}>Delivery Details</p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="delivery-grid">
                 <div>
                   <label style={lStyle}>Full Name</label>
                   <input style={iStyle} value={form.full_name}
@@ -256,7 +256,7 @@ export default function Checkout() {
           <div style={{
             border: '1px solid rgba(255,255,255,0.06)', padding: 32,
             position: 'sticky', top: 100, background: 'rgba(255,255,255,0.02)'
-          }}>
+          }} className="order-summary">
             <p style={{ fontSize: 11, letterSpacing: '0.3em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 24 }}>Order Summary</p>
 
             {cart.length === 0 ? (
@@ -312,6 +312,16 @@ export default function Checkout() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .checkout-container { padding: 30px 16px !important; }
+          .checkout-h1 { font-size: 32px !important; }
+          .checkout-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .delivery-grid { grid-template-columns: 1fr !important; }
+          .order-summary { position: static !important; }
+        }
+      `}</style>
     </ShopLayout>
   )
 }

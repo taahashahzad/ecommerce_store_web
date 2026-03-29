@@ -65,9 +65,9 @@ export default function MyOrders() {
 
   return (
     <ShopLayout>
-      <div style={{ padding: '60px 48px', animation: 'fadeUp 0.6s ease both' }}>
+      <div style={{ padding: '60px 48px', animation: 'fadeUp 0.6s ease both' }} className="orders-container">
         <p style={{ fontSize: 10, letterSpacing: '0.4em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 12 }}>Your Account</p>
-        <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 44, color: '#f0ece4', marginBottom: 8 }}>My Orders</h1>
+        <h1 style={{ fontFamily: '"Playfair Display", serif', fontSize: 44, color: '#f0ece4', marginBottom: 8 }} className="orders-h1">My Orders</h1>
         <p style={{ color: '#555', fontSize: 14, marginBottom: 48 }}>Track and manage all your orders in one place.</p>
 
         {orders.length === 0 ? (
@@ -246,7 +246,7 @@ export default function MyOrders() {
                   </div>
 
                   {/* Order summary */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="order-summary">
                     <div>
                       <p style={{ fontSize: 10, letterSpacing: '0.3em', color: '#c9a96e', textTransform: 'uppercase', marginBottom: 14 }}>Delivery Address</p>
                       <p style={{ fontSize: 13, color: '#a09888', lineHeight: 1.8 }}>{order.shipping_address}</p>
@@ -273,6 +273,14 @@ export default function MyOrders() {
           )
         })}
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .orders-container { padding: 30px 16px !important; }
+          .orders-h1 { font-size: 32px !important; }
+          .order-summary { grid-template-columns: 1fr !important; gap: 16px !important; }
+        }
+      `}</style>
     </ShopLayout>
   )
 }
