@@ -76,7 +76,7 @@ export default function ShopLayout({ children }) {
           </div>
         </Link>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 36 }} className="nav-links">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 36, flexWrap: 'wrap' }} className="nav-links">
           <Link to="/" className="nav-link">Collection</Link>
           <Link to="/blog" className="nav-link">Journal</Link>
           <Link to="/about" className="nav-link">About</Link>
