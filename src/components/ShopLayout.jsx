@@ -138,18 +138,18 @@ export default function ShopLayout({ children }) {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
-      <div className="mobile-menu" style={{
-        position: 'fixed', top: 72, left: 0, right: 0,
-        background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
-        display: menuOpen ? 'block' : 'none', zIndex: 999
-      }}>
-        <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>Collection</Link>
-          <Link to="/blog" className="nav-link" onClick={() => setMenuOpen(false)}>Journal</Link>
-          <Link to="/about" className="nav-link" onClick={() => setMenuOpen(false)}>About</Link>
-          <Link to="/contact" className="nav-link" onClick={() => setMenuOpen(false)}>Contact</Link>
+<div className="mobile-menu" style={{
+          position: 'fixed', top: 72, left: 0, right: 0,
+          background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(20px)',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          display: menuOpen ? 'block' : 'none', zIndex: 999
+        }}>
+          <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>Collection</Link>
+            <Link to="/blog" className="nav-link" onClick={() => setMenuOpen(false)}>Journal</Link>
+            <Link to="/about" className="nav-link" onClick={() => setMenuOpen(false)}>About</Link>
+            <Link to="/contact" className="nav-link" onClick={() => setMenuOpen(false)}>Contact</Link>
+            <Link to="/cart" className="nav-link" onClick={() => setMenuOpen(false)}>Cart</Link>
           {user ? (
             <>
               <span style={{ fontSize: 12, color: '#777', letterSpacing: '0.08em' }}>

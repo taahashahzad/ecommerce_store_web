@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useState, useCallback } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import ShopLayout from '../../components/ShopLayout'
 import { supabase } from '../../supabase'
@@ -7,6 +7,7 @@ import { useCart } from '../../context/CartContext'
 
 export default function ProductDetail() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [product, setProduct]     = useState(null)
   const [variants, setVariants]   = useState([])
   const [reviews, setReviews]     = useState([])
@@ -17,8 +18,7 @@ export default function ProductDetail() {
   const [hasReviewed, setHasReviewed] = useState(false)
   const [showReviewForm, setShowReviewForm] = useState(false)
   const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' })
-  const [submitting, setSubmitting] = useState(false)
-  const { addToCart, user } = useCart()
+  const [submitting, setSubmitting] = useState(false)  const [justAdded, setJustAdded] = useState(false)  const { addToCart, user } = useCart()
 
   useEffect(() => {
     fetchAll()
@@ -48,9 +48,8 @@ export default function ProductDetail() {
   const handleAddToCart = () => {
     if (variants.length > 0 && !selected) { toast.error('Select a variant'); return }
     addToCart(selected || {}, product, qty)
-    toast.success('Added to cart!', {
-      style: { background: '#1a1a0e', color: '#c9a96e', border: '1px solid rgba(201,169,110,0.3)' }
-    })
+    setJustAdded(true)
+    setTimeout(() => setJustAdded(false), 5000) // Hide after 5 seconds
   }
 
   const submitReview = async (e) => {
@@ -188,6 +187,21 @@ export default function ProductDetail() {
               fontSize: 12, letterSpacing: '0.25em', textTransform: 'uppercase',
               fontFamily: '"DM Sans", sans-serif', cursor: 'pointer', fontWeight: 500, color: '#0a0a0a'
             }}>Add to Cart</button>
+
+            {justAdded && (
+              <div style={{
+                marginTop: 16, padding: '12px 16px',
+                background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.3)',
+                borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                animation: 'fadeIn 0.3s ease'
+              }}>
+                <span style={{ fontSize: 13, color: '#c9a96e' }}>Added to cart!</span>
+                <button onClick={() => navigate('/cart')} className="ghost-btn" style={{
+                  padding: '6px 12px', fontSize: 11, letterSpacing: '0.1em',
+                  textTransform: 'uppercase', fontFamily: '"DM Sans", sans-serif', cursor: 'pointer'
+                }}>Go to Cart</button>
+              </div>
+            )}
 
             <div style={{ marginTop: 40, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 32 }}>
               {[['Material', 'Premium quality'], ['Origin', 'Pakistan'], ['Delivery', '3–5 business days']].map(([k, v]) => (
@@ -359,8 +373,7 @@ export default function ProductDetail() {
           .product-h1 { font-size: 28px !important; }
           .product-price { font-size: 24px !important; }
           .reviews-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+        }        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }      `}</style>
     </ShopLayout>
   )
 }
