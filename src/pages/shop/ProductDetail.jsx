@@ -112,7 +112,7 @@ export default function ProductDetail() {
       }} className="product-detail-container">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }} className="product-grid">
           {/* Image */}
-          <div style={{ position: 'sticky', top: 100 }}>
+          <div style={{ position: 'sticky', top: 100 }} className="product-image-sticky">
             <div style={{ aspectRatio: '4/5', background: '#111', border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', position: 'relative' }}>
               {product.image_url
                 ? <img src={product.image_url} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }}
@@ -375,6 +375,7 @@ export default function ProductDetail() {
           .product-h1 { font-size: 28px !important; }
           .product-price { font-size: 24px !important; }
           .reviews-grid { grid-template-columns: 1fr !important; }
+          .product-image-sticky { position: static !important; }
         }        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }      `}</style>
     </ShopLayout>
   )
