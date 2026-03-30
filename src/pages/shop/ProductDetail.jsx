@@ -18,7 +18,9 @@ export default function ProductDetail() {
   const [hasReviewed, setHasReviewed] = useState(false)
   const [showReviewForm, setShowReviewForm] = useState(false)
   const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' })
-  const [submitting, setSubmitting] = useState(false)  const [justAdded, setJustAdded] = useState(false)  const { addToCart, user } = useCart()
+  const [submitting, setSubmitting] = useState(false)  
+  const [justAdded, setJustAdded] = useState(false)  
+  const { addToCart, user } = useCart()
 
   useEffect(() => {
     fetchAll()
